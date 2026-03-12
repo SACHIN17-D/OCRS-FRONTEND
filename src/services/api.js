@@ -1,0 +1,35 @@
+import axios from 'axios';
+
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
+const api = axios.create({
+  baseURL: `${API_URL}/api`,
+  headers: { 'Content-Type': 'application/json' },
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('cg_token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+// Auth
+export const loginUser = (data) => api.post('/auth/login', data);
+export const registerUser = (data) => api.post('/auth/register', data);
+
+// Reports
+export const createReport = (data) => api.post('/reports', data);
+export const getAllReports = () => api.get('/reports');
+export const getMyReports = () => api.get('/reports/mine');
+export const submitAppeal = (reportId, data) => api.post(`/reports/appeal/${reportId}`, data);
+
+// Evidence
+export const uploadEvidence = (reportId, formData) =>
+  api.post(`/evidence/${reportId}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+
+// Admin
+export const verifyReport = (reportId, data) => api.put(`/admin/verify/${reportId}`, data);
+
+export default api;
