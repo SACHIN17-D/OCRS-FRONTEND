@@ -91,7 +91,7 @@ export default function Login() {
           <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 14 }}>
             Use your college Google account to sign in
           </div>
-          <a href="http://localhost:5000/api/auth/google"
+          <a href="https://ocrs-backend-8fgs.onrender.com/api/auth/google"
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
               padding: '11px 20px', borderRadius: 'var(--radius)',
