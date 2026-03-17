@@ -228,21 +228,29 @@ export default function AdminDashboard() {
 
               {/* Evidence */}
               {selected.evidence && (
-                <div style={{ marginBottom: 20 }}>
-                  <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 8 }}>Student Proof</div>
-                  {selected.evidence.imageUrl && (
-                    <img src={selected.evidence.imageUrl} alt="Proof" style={{
-                      width: '100%', maxHeight: 200, objectFit: 'cover',
-                      borderRadius: 8, border: '1px solid var(--border)', marginBottom: 10,
-                    }} />
-                  )}
-                  {selected.evidence.explanation && (
-                    <p style={{ fontSize: 13, color: 'var(--text2)', padding: '10px 14px', background: 'var(--bg)', borderRadius: 8 }}>
-                      {selected.evidence.explanation}
-                    </p>
-                  )}
-                </div>
-              )}
+  <div style={{ marginBottom: 20 }}>
+    <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 8 }}>
+      Student Proof
+    </div>
+    {selected.evidence.imageUrl && (
+      <a href={selected.evidence.imageUrl} target="_blank" rel="noreferrer">
+        <img src={selected.evidence.imageUrl} alt="Proof" style={{
+          width: '100%', maxHeight: 400, objectFit: 'contain',
+          borderRadius: 8, border: '1px solid var(--border)', marginBottom: 10,
+          background: 'var(--bg)', cursor: 'pointer',
+        }} />
+      </a>
+    )}
+    <div style={{ fontSize: 11, color: 'var(--muted)', textAlign: 'center', marginTop: 4 }}>
+      Click image to view full size 🔍
+    </div>
+    {selected.evidence.explanation && (
+      <p style={{ fontSize: 13, color: 'var(--text2)', padding: '10px 14px', background: 'var(--bg)', borderRadius: 8 }}>
+        {selected.evidence.explanation}
+      </p>
+    )}
+  </div>
+)}
               {/* Appeal message */}
 {selected.appealMessage && (
   <div style={{ marginBottom: 20 }}>
