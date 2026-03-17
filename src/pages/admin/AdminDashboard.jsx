@@ -269,7 +269,7 @@ export default function AdminDashboard() {
                   </div>
                   <div style={{ display: 'flex', gap: 10 }}>
                     <button className="btn btn-success" style={{ flex: 1 }}
-                      disabled={actionLoading} onClick={() => handleVerify('approved')}>
+                      disabled={actionLoading} onClick={() => handleVerify('approve')}>
                       ✅ Approve & Resolve
                     </button>
                     <button className="btn btn-danger" style={{ flex: 1 }}
