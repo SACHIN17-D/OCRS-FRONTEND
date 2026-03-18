@@ -12,20 +12,12 @@ export default function AdminDashboard() {
   const [filter, setFilter] = useState('all');
   const [alert, setAlert] = useState(null);
 
-  const MOCK_REPORTS = [
-    { _id: '1', reportId: 'RPT-2024-001', studentName: 'John Student', studentRollNo: 'CS2024001', category: 'Attendance', severity: 'medium', status: 'proof_submitted', details: 'Student was absent for 3 consecutive days without prior notice or valid reason.', reporterName: 'Prof. Reporter', createdAt: new Date(), evidence: { explanation: 'I was sick and forgot to inform. Here is my medical certificate.' } },
-    { _id: '2', reportId: 'RPT-2024-002', studentName: 'Jane Doe', studentRollNo: 'CS2024002', category: 'Dress Code', severity: 'low', status: 'reported', details: 'Student was not wearing the college ID card during campus hours.', reporterName: 'Prof. Reporter', createdAt: new Date() },
-    { _id: '3', reportId: 'RPT-2024-003', studentName: 'Mike Smith', studentRollNo: 'CS2024003', category: 'Cheating', severity: 'high', status: 'resolved', details: 'Student was caught using unauthorized materials during the mid-semester examination.', reporterName: 'Prof. Reporter', createdAt: new Date(), adminComment: 'Verified. Disciplinary action has been taken.' },
-    { _id: '4', reportId: 'RPT-2024-004', studentName: 'Sara Lee', studentRollNo: 'CS2024004', category: 'Behavior', severity: 'medium', status: 'under_review', details: 'Student was disruptive during lecture and refused to follow instructions.', reporterName: 'Prof. Reporter', createdAt: new Date() },
-  ];
-
   const fetchReports = async () => {
     try {
       const res = await getAllReports();
       setReports(res.data);
     } catch (err) {
-      // Use mock data if backend not available
-      setReports(MOCK_REPORTS);
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -43,7 +35,6 @@ export default function AdminDashboard() {
     try {
       const res = await verifyReport(selected._id, { decision, adminComment });
       if (res.data) {
-        // Update the report in local state immediately
         setReports(prev => prev.map(r =>
           r._id === selected._id
             ? { ...r, status: decision === 'approve' ? 'resolved' : 'rejected', adminComment }
@@ -60,7 +51,7 @@ export default function AdminDashboard() {
       setActionLoading(false);
     }
   };
-  
+
   const filtered = filter === 'all' ? reports : reports.filter(r => r.status === filter);
 
   const counts = {
@@ -236,43 +227,44 @@ export default function AdminDashboard() {
 
               {/* Evidence */}
               {selected.evidence && (
-  <div style={{ marginBottom: 20 }}>
-    <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 8 }}>
-      Student Proof
-    </div>
-    {selected.evidence.imageUrl && (
-      <a href={selected.evidence.imageUrl} target="_blank" rel="noreferrer">
-        <img src={selected.evidence.imageUrl} alt="Proof" style={{
-          width: '100%', maxHeight: 400, objectFit: 'contain',
-          borderRadius: 8, border: '1px solid var(--border)', marginBottom: 10,
-          background: 'var(--bg)', cursor: 'pointer',
-        }} />
-      </a>
-    )}
-    <div style={{ fontSize: 11, color: 'var(--muted)', textAlign: 'center', marginTop: 4 }}>
-      Click image to view full size 🔍
-    </div>
-    {selected.evidence.explanation && (
-      <p style={{ fontSize: 13, color: 'var(--text2)', padding: '10px 14px', background: 'var(--bg)', borderRadius: 8 }}>
-        {selected.evidence.explanation}
-      </p>
-    )}
-  </div>
-)}
+                <div style={{ marginBottom: 20 }}>
+                  <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 8 }}>
+                    Student Proof
+                  </div>
+                  {selected.evidence.imageUrl && (
+                    <a href={selected.evidence.imageUrl} target="_blank" rel="noreferrer">
+                      <img src={selected.evidence.imageUrl} alt="Proof" style={{
+                        width: '100%', maxHeight: 400, objectFit: 'contain',
+                        borderRadius: 8, border: '1px solid var(--border)', marginBottom: 10,
+                        background: 'var(--bg)', cursor: 'pointer',
+                      }} />
+                    </a>
+                  )}
+                  <div style={{ fontSize: 11, color: 'var(--muted)', textAlign: 'center', marginTop: 4 }}>
+                    Click image to view full size 🔍
+                  </div>
+                  {selected.evidence.explanation && (
+                    <p style={{ fontSize: 13, color: 'var(--text2)', padding: '10px 14px', background: 'var(--bg)', borderRadius: 8 }}>
+                      {selected.evidence.explanation}
+                    </p>
+                  )}
+                </div>
+              )}
+
               {/* Appeal message */}
-{selected.appealMessage && (
-  <div style={{ marginBottom: 20 }}>
-    <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 6 }}>
-      Student Appeal —{' '}
-      <span style={{ color: selected.appealStatus === 'resubmitted' ? 'var(--blue)' : 'var(--amber)' }}>
-        {selected.appealStatus === 'resubmitted' ? '📎 Re-submitted Proof' : '✍️ Written Appeal'}
-      </span>
-    </div>
-    <p style={{ fontSize: 13, color: 'var(--text2)', padding: '12px 14px', background: 'var(--amber-light)', borderRadius: 8, border: '1px solid #fde68a' }}>
-      {selected.appealMessage}
-    </p>
-  </div>
-)}
+              {selected.appealMessage && (
+                <div style={{ marginBottom: 20 }}>
+                  <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 6 }}>
+                    Student Appeal —{' '}
+                    <span style={{ color: selected.appealStatus === 'resubmitted' ? 'var(--blue)' : 'var(--amber)' }}>
+                      {selected.appealStatus === 'resubmitted' ? '📎 Re-submitted Proof' : '✍️ Written Appeal'}
+                    </span>
+                  </div>
+                  <p style={{ fontSize: 13, color: 'var(--text2)', padding: '12px 14px', background: 'var(--amber-light)', borderRadius: 8, border: '1px solid #fde68a' }}>
+                    {selected.appealMessage}
+                  </p>
+                </div>
+              )}
 
               {/* Admin action */}
               {(selected.status === 'proof_submitted' || selected.status === 'under_review') && (
@@ -289,7 +281,7 @@ export default function AdminDashboard() {
                       ✅ Approve & Resolve
                     </button>
                     <button className="btn btn-danger" style={{ flex: 1 }}
-                      disabled={actionLoading} onClick={() => handleVerify('rejected')}>
+                      disabled={actionLoading} onClick={() => handleVerify('reject')}>
                       ❌ Reject Report
                     </button>
                   </div>
