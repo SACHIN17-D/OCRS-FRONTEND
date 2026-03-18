@@ -3,10 +3,10 @@
 :root {
   /* Core Colors */
   --bg: #0d1117;
---bg2: #111827;
---bg3: #1a2236;
---surface: #161f30;
---surface2: #1e2a40;
+  --bg2: #111827;
+  --bg3: #1a2236;
+  --surface: #161f30;
+  --surface2: #1e2a40;
   --border: rgba(255, 100, 30, 0.12);
   --border-bright: rgba(255, 100, 30, 0.3);
 
@@ -55,8 +55,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   background-image:
-    radial-gradient(ellipse at 20% 0%, rgba(255, 100, 25, 0.05) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 100%, rgba(255, 100, 25, 0.03) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 0%, rgba(255, 100, 25, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(255, 100, 25, 0.04) 0%, transparent 60%);
   background-attachment: fixed;
 }
 
