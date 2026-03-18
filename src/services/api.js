@@ -16,6 +16,7 @@ api.interceptors.request.use((config) => {
 // Auth
 export const loginUser = (data) => api.post('/auth/login', data);
 export const registerUser = (data) => api.post('/auth/register', data);
+export const getMe = () => api.get('/auth/me');
 
 // Reports
 export const createReport = (data) => api.post('/reports', data);
@@ -31,5 +32,6 @@ export const uploadEvidence = (reportId, formData) =>
 
 // Admin
 export const verifyReport = (reportId, data) => api.put(`/admin/verify/${reportId}`, data);
+export const getWarnings = () => api.get('/admin/warnings');
 
 export default api;

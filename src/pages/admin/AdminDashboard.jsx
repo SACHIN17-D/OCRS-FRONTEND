@@ -255,9 +255,22 @@ export default function AdminDashboard() {
                           {report.reportId}
                         </td>
                         <td style={{ padding: '14px 16px' }}>
-                          <div style={{ fontWeight: 500, fontSize: 13 }}>{report.studentName || 'Unknown'}</div>
-                          <div style={{ fontSize: 11, color: 'var(--muted)' }}>{report.studentRollNo}</div>
-                        </td>
+  <div style={{ fontWeight: 500, fontSize: 13 }}>{report.studentName || 'Unknown'}</div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
+    <span style={{ fontSize: 11, color: 'var(--muted)' }}>{report.studentRollNo}</span>
+    {warningData.find(w => w.rollNo === report.studentRollNo)?.warnings > 0 && (
+      <span style={{
+        fontSize: 10, padding: '1px 6px', borderRadius: 999, fontWeight: 700,
+        background: warningData.find(w => w.rollNo === report.studentRollNo)?.warnings >= 3
+          ? 'rgba(239,68,68,0.1)' : 'rgba(245,158,11,0.1)',
+        color: warningData.find(w => w.rollNo === report.studentRollNo)?.warnings >= 3
+          ? '#ef4444' : '#f59e0b',
+      }}>
+        ⚠️ {warningData.find(w => w.rollNo === report.studentRollNo)?.warnings}w
+      </span>
+    )}
+  </div>
+</td>
                         <td style={{ padding: '14px 16px', fontSize: 13 }}>{report.category}</td>
                         <td style={{ padding: '14px 16px' }}>
                           <span className={`badge badge-${report.severity}`}>{report.severity}</span>
