@@ -42,10 +42,10 @@ export default function AdminDashboard() {
     setActionLoading(true);
     try {
       await verifyReport(selected._id, { decision, adminComment });
-      showAlert(`Report ${decision === 'approved' ? 'approved ✅' : 'rejected ❌'} successfully`);
+      showAlert(`Report ${decision === 'approve' ? 'approved ✅' : 'rejected ❌'} successfully`);
       setSelected(null);
       setAdminComment('');
-      fetchReports();
+      await fetchReports();
     } catch (err) {
       showAlert(err.response?.data?.message || 'Action failed', 'error');
     } finally {
