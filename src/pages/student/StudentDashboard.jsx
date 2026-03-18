@@ -167,12 +167,12 @@ export default function StudentDashboard() {
                     </div>
                   </div>
 
-                  {report.status === 'reported' && (
-                    <button className="btn btn-primary btn-sm"
-                      onClick={() => { setSelected(report); setPreview(null); setExplanation(''); setProofImage(null); }}>
-                      📎 Upload Proof
-                    </button>
-                  )}
+                  {(report.status === 'reported' || (report.status === 'under_review' && report.appealStatus === 'resubmitted')) && (
+  <button className="btn btn-primary btn-sm"
+    onClick={() => { setSelected(report); setPreview(null); setExplanation(''); setProofImage(null); }}>
+    📎 {report.appealStatus === 'resubmitted' ? 'Upload New Proof' : 'Upload Proof'}
+  </button>
+)}
                 </div>
 
                 {/* Status Tracker */}
