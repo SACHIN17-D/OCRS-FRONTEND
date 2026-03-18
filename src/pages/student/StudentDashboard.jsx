@@ -33,12 +33,13 @@ export default function StudentDashboard() {
   const fetchStudentInfo = async () => {
     try {
       const res = await getMe();
-      setStudentInfo(res.data); // directly the user object now
+      console.log('Student Info:', res.data);
+      setStudentInfo(res.data);
     } catch (err) {
-      console.error(err);
+      console.error('getMe error:', err);
     }
   };
-  
+
   useEffect(() => {
     fetchStudentInfo();
     fetchReports();
