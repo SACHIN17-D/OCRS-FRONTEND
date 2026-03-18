@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children, allowedRoles }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
         <div style={{ textAlign: 'center', color: 'var(--muted)' }}>
           <div style={{ fontSize: 32, marginBottom: 12 }}>🎓</div>
-          <div style={{ fontFamily: 'Plus Jakarta Sans', fontSize: 14 }}>Loading...</div>
+          <div style={{ fontFamily: 'DM Sans, sans-serif', fontSize: 14 }}>Loading...</div>
         </div>
       </div>
     );
@@ -18,8 +18,13 @@ export default function ProtectedRoute({ children, allowedRoles }) {
   if (!user) return <Navigate to="/login" replace />;
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    // Redirect to their own dashboard
-    const redirectMap = { admin: '/admin', reporter: '/reporter', student: '/student' };
+    const redirectMap = {
+      admin: '/admin',
+      reporter: '/reporter',
+      student: '/student',
+      hod: '/hod',
+      principal: '/principal',
+    };
     return <Navigate to={redirectMap[user.role] || '/login'} replace />;
   }
 

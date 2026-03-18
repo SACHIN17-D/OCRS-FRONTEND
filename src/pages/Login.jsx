@@ -21,8 +21,12 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await loginUser({ email, password, role: 'admin' });
-      login(res.data.user, res.data.token);
-      navigate('/admin');
+      const { user, token } = res.data;
+      login(user, token);
+      if (user.role === 'admin') navigate('/admin');
+      else if (user.role === 'hod') navigate('/hod');
+      else if (user.role === 'principal') navigate('/principal');
+      else navigate('/login');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed.');
       setLoading(false);
@@ -102,6 +106,8 @@ export default function Login() {
               { icon: '🎓', label: 'Students', desc: 'Track reports' },
               { icon: '👨‍🏫', label: 'Faculty', desc: 'File reports' },
               { icon: '🛡️', label: 'Admin', desc: 'Manage cases' },
+              { icon: '🏛️', label: 'HOD', desc: 'Review meetings' },
+              { icon: '👑', label: 'Principal', desc: 'Final decisions' },
             ].map(item => (
               <div key={item.label}>
                 <div style={{ fontSize: 24, marginBottom: 6 }}>{item.icon}</div>
@@ -181,7 +187,9 @@ export default function Login() {
           {/* Divider */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
             <div style={{ flex: 1, height: 1, background: 'rgba(0, 210, 255, 0.1)' }} />
-            <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Admin Only</span>
+            <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              Staff Login
+            </span>
             <div style={{ flex: 1, height: 1, background: 'rgba(0, 210, 255, 0.1)' }} />
           </div>
 
@@ -200,9 +208,13 @@ export default function Login() {
             </div>
             <button type="submit" className="btn btn-primary btn-full"
               disabled={loading} style={{ marginTop: 8 }}>
-              {loading ? 'Signing in...' : '🛡️ Sign in as Admin'}
+              {loading ? 'Signing in...' : '🔐 Sign In'}
             </button>
           </form>
+
+          <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--muted)', marginTop: 16 }}>
+            For Admin, HOD & Principal access
+          </p>
         </div>
       </div>
     </div>
