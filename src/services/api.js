@@ -34,4 +34,12 @@ export const uploadEvidence = (reportId, formData) =>
 export const verifyReport = (reportId, data) => api.put(`/admin/verify/${reportId}`, data);
 export const getWarnings = () => api.get('/admin/warnings');
 
+// HOD
+export const getHodReports = () => api.get('/hod/reports');
+export const confirmHodMeeting = (reportId, data) => api.put(`/hod/confirm/${reportId}`, data);
+
+// Principal
+export const getPrincipalReports = () => api.get('/principal/reports');
+export const confirmPrincipalMeeting = (reportId, data) => api.put(`/principal/confirm/${reportId}`, data);
+
 export default api;

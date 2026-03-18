@@ -7,6 +7,8 @@ import AuthCallback from './pages/AuthCallback';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ReporterDashboard from './pages/reporter/ReporterDashboard';
 import StudentDashboard from './pages/student/StudentDashboard';
+import HodDashboard from './pages/hod/HodDashboard';
+import PrincipalDashboard from './pages/principal/PrincipalDashboard';
 
 export default function App() {
   return (
@@ -32,6 +34,18 @@ export default function App() {
           <Route path="/student" element={
             <ProtectedRoute allowedRoles={['student']}>
               <StudentDashboard />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/hod" element={
+            <ProtectedRoute allowedRoles={['hod']}>
+              <HodDashboard />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/principal" element={
+            <ProtectedRoute allowedRoles={['principal']}>
+              <PrincipalDashboard />
             </ProtectedRoute>
           } />
 

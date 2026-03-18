@@ -30,6 +30,8 @@ export default function AuthCallback() {
         admin: '/admin',
         reporter: '/reporter',
         student: '/student',
+        hod: '/hod',
+        principal: '/principal',
       };
 
       const destination = redirectMap[user.role] || '/login';
@@ -51,13 +53,13 @@ export default function AuthCallback() {
       }}>
         <div style={{ textAlign: 'center', maxWidth: 400 }}>
           <div style={{ fontSize: 40, marginBottom: 16 }}>❌</div>
-          <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 18, fontWeight: 700, marginBottom: 8 }}>
+          <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18, fontWeight: 700, marginBottom: 8 }}>
             Login Failed
           </div>
           <div style={{ color: 'var(--muted)', fontSize: 13, marginBottom: 20 }}>
             {error}
           </div>
-          <a href="/login" style={{ color: 'var(--accent)', fontSize: 13 }}>
+          <a href="/login" style={{ color: '#00d2ff', fontSize: 13 }}>
             ← Back to Login
           </a>
         </div>
@@ -73,7 +75,7 @@ export default function AuthCallback() {
     }}>
       <div style={{ textAlign: 'center' }}>
         <div style={{ fontSize: 40, marginBottom: 16 }}>🔐</div>
-        <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 18, fontWeight: 700 }}>
+        <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 18, fontWeight: 700 }}>
           Signing you in...
         </div>
         <div style={{ color: 'var(--muted)', fontSize: 13, marginTop: 8 }}>
