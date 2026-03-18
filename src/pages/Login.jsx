@@ -66,14 +66,14 @@ export default function Login() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 64 }}>
           <div style={{
             width: 44, height: 44,
-            background: 'linear-gradient(135deg, #f5c518, #e6a800)',
+            background: 'linear-gradient(135deg, #ff6419, #e6a800)',
             borderRadius: 12,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 22, boxShadow: '0 4px 20px rgba(245,197,24,0.3)',
           }}>📋</div>
           <div>
             <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 22, fontWeight: 700, color: '#f0f4ff' }}>
-              OCRS<span style={{ color: '#f5c518' }}>.</span>
+              OCRS<span style={{ color: '#ff6419' }}>.</span>
             </div>
             <div style={{ fontSize: 11, color: 'var(--muted)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Online Compliance Reporting
@@ -82,14 +82,14 @@ export default function Login() {
         </div>
 
         <div style={{ maxWidth: 480 }}>
-          <div style={{ width: 40, height: 3, background: '#f5c518', borderRadius: 2, marginBottom: 24 }} />
+          <div style={{ width: 40, height: 3, background: '#ff6419', borderRadius: 2, marginBottom: 24 }} />
           <h1 style={{
             fontFamily: 'DM Serif Display, serif',
             fontSize: 48, fontWeight: 700, lineHeight: 1.1,
             color: '#f0f4ff', marginBottom: 16,
           }}>
             Welcome<br />
-            <span style={{ color: '#f5c518' }}>Back.</span>
+            <span style={{ color: '#ff6419' }}>Back.</span>
           </h1>
           <p style={{ color: 'var(--text2)', fontSize: 15, lineHeight: 1.7, maxWidth: 380 }}>
             BITSathy's disciplinary management portal for transparent and fair student compliance reporting.
@@ -161,7 +161,7 @@ export default function Login() {
                 textDecoration: 'none', transition: 'all 0.15s',
                 fontFamily: 'DM Sans, sans-serif',
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = '#f5c518'; e.currentTarget.style.background = 'rgba(245,197,24,0.1)'; }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#ff6419'; e.currentTarget.style.background = 'rgba(245,197,24,0.1)'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(245,197,24,0.2)'; e.currentTarget.style.background = 'rgba(245,197,24,0.05)'; }}
             >
               <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="Google" />
@@ -169,7 +169,7 @@ export default function Login() {
             </a>
             <div style={{ textAlign: 'center', marginTop: 10 }}>
               <span onClick={() => navigate('/register')} style={{
-                fontSize: 12, color: '#f5c518', cursor: 'pointer', fontWeight: 600,
+                fontSize: 12, color: '#ff6419', cursor: 'pointer', fontWeight: 600,
               }}>
                 New student? Register here →
               </span>

@@ -2,23 +2,24 @@
 
 :root {
   /* Core Colors */
-  --bg: #0a0f1e;
-  --bg2: #0f1628;
-  --bg3: #151d35;
-  --surface: #1a2340;
-  --surface2: #1f2a4a;
-  --border: rgba(245, 197, 24, 0.12);
-  --border-bright: rgba(245, 197, 24, 0.3);
+  --bg: #0f0f0f;
+  --bg2: #161616;
+  --bg3: #1e1e1e;
+  --surface: #1a1a1a;
+  --surface2: #222222;
+  --border: rgba(255, 100, 30, 0.12);
+  --border-bright: rgba(255, 100, 30, 0.3);
 
-  /* Gold Accent */
-  --accent: #f5c518;
-  --accent-dim: rgba(245, 197, 24, 0.15);
-  --accent-glow: rgba(245, 197, 24, 0.08);
+  /* Orange Accent */
+  --accent: #ff6419;
+  --accent-dim: rgba(255, 100, 25, 0.15);
+  --accent-glow: rgba(255, 100, 25, 0.08);
+  --accent-light: rgba(255, 100, 25, 0.1);
 
   /* Text */
-  --text: #f0f4ff;
-  --text2: #a8b4d0;
-  --muted: #5a6a8a;
+  --text: #f5f5f5;
+  --text2: #a0a0a0;
+  --muted: #555555;
   --white: #ffffff;
 
   /* Status Colors */
@@ -32,9 +33,9 @@
   --red-light: rgba(239, 68, 68, 0.1);
 
   /* Shadows */
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.6);
-  --shadow-gold: 0 4px 24px rgba(245, 197, 24, 0.15);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.7);
+  --shadow-gold: 0 4px 24px rgba(255, 100, 25, 0.2);
 
   /* Radius */
   --radius: 10px;
@@ -54,8 +55,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   background-image:
-    radial-gradient(ellipse at 20% 0%, rgba(245, 197, 24, 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 100%, rgba(59, 130, 246, 0.04) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 0%, rgba(255, 100, 25, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(255, 100, 25, 0.03) 0%, transparent 60%);
   background-attachment: fixed;
 }
 
@@ -99,11 +100,11 @@ h1, h2, h3, h4 {
 
 .btn-primary {
   background: var(--accent);
-  color: #0a0f1e;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background: #ffd700;
+  background: #ff7733;
   box-shadow: var(--shadow-gold);
   transform: translateY(-1px);
 }
@@ -273,7 +274,7 @@ select.form-input option {
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; }
 
-/* Gold accent line */
+/* Accent line */
 .gold-line {
   width: 40px;
   height: 3px;
