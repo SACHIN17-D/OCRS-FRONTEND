@@ -563,26 +563,76 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              {(selected.status === 'proof_submitted' || selected.status === 'under_review') && (
-                <div>
-                  <hr className="divider" />
-                  <div className="form-group">
-                    <label className="form-label">Admin Comment (optional)</label>
-                    <textarea className="form-input" placeholder="Add a note about your decision..."
-                      value={adminComment} onChange={e => setAdminComment(e.target.value)} />
-                  </div>
-                  <div style={{ display: 'flex', gap: 10 }}>
-                    <button className="btn btn-success" style={{ flex: 1 }}
-                      disabled={actionLoading} onClick={() => handleVerify('approve')}>
-                      ✅ Approve & Resolve
-                    </button>
-                    <button className="btn btn-danger" style={{ flex: 1 }}
-                      disabled={actionLoading} onClick={() => handleVerify('reject')}>
-                      ❌ Reject Report
-                    </button>
-                  </div>
-                </div>
-              )}
+{(selected.status === 'proof_submitted' || selected.status === 'under_review') && (
+  <div>
+    <hr className="divider" />
+
+    {/* Show meeting pending warning */}
+    {selected.meetingStatus === 'pending' && (
+      <div style={{
+        padding: '14px 16px', marginBottom: 16,
+        background: 'rgba(239,68,68,0.08)',
+        border: '1px solid rgba(239,68,68,0.2)',
+        borderRadius: 10, fontSize: 13,
+      }}>
+        <div style={{ fontWeight: 700, color: '#ef4444', marginBottom: 4 }}>
+          ⏳ {selected.escalatedTo?.toUpperCase()} Meeting Pending
+        </div>
+        <div style={{ color: 'var(--text2)' }}>
+          Student must meet the {selected.escalatedTo === 'hod' ? 'HOD' : 'Principal'} in person before this report can be approved.
+        </div>
+      </div>
+    )}
+
+    {/* Show meeting confirmed */}
+    {selected.meetingStatus === 'confirmed' && (
+      <div style={{
+        padding: '14px 16px', marginBottom: 16,
+        background: 'var(--green-light)',
+        border: '1px solid rgba(34,197,94,0.2)',
+        borderRadius: 10, fontSize: 13,
+      }}>
+        <div style={{ fontWeight: 700, color: 'var(--green)', marginBottom: 4 }}>
+          ✅ Meeting Confirmed
+        </div>
+        <div style={{ color: 'var(--text2)' }}>
+          {selected.meetingNotes && `Notes: ${selected.meetingNotes}`}
+        </div>
+      </div>
+    )}
+
+    <div className="form-group">
+      <label className="form-label">Admin Comment (optional)</label>
+      <textarea className="form-input" placeholder="Add a note about your decision..."
+        value={adminComment} onChange={e => setAdminComment(e.target.value)} />
+    </div>
+
+    {/* Only show approve/reject if meeting is not pending */}
+    {selected.meetingStatus !== 'pending' && (
+      <div style={{ display: 'flex', gap: 10 }}>
+        <button className="btn btn-success" style={{ flex: 1 }}
+          disabled={actionLoading} onClick={() => handleVerify('approve')}>
+          ✅ Approve & Resolve
+        </button>
+        <button className="btn btn-danger" style={{ flex: 1 }}
+          disabled={actionLoading} onClick={() => handleVerify('reject')}>
+          ❌ Reject Report
+        </button>
+      </div>
+    )}
+
+    {selected.meetingStatus === 'pending' && (
+      <div style={{
+        padding: '12px 16px', background: 'rgba(239,68,68,0.05)',
+        border: '1px solid rgba(239,68,68,0.15)',
+        borderRadius: 8, textAlign: 'center',
+        fontSize: 13, color: '#ef4444', fontWeight: 500,
+      }}>
+        🔒 Approval locked until meeting is confirmed
+      </div>
+    )}
+  </div>
+)}
 
               {selected.status === 'resolved' && (
                 <div className="alert alert-success">This report has been resolved. ✅</div>

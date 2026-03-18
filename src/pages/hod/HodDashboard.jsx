@@ -38,7 +38,7 @@ export default function HodDashboard() {
       showAlert('Meeting confirmed! Admin can now approve the report. ✅');
       setSelected(null);
       setMeetingNotes('');
-      fetchReports();
+      await fetchReports(); // wait for refresh
     } catch (err) {
       showAlert(err.response?.data?.message || 'Failed to confirm meeting.', 'error');
     } finally {
