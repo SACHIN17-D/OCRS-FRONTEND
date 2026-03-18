@@ -41,8 +41,16 @@ export default function AdminDashboard() {
   const handleVerify = async (decision) => {
     setActionLoading(true);
     try {
-      await verifyReport(selected._id, { decision, adminComment });
-      showAlert(`Report ${decision === 'approved' ? 'approved ✅' : 'rejected ❌'} successfully`);
+      const res = await verifyReport(selected._id, { decision, adminComment });
+      if (res.data) {
+        // Update the report in local state immediately
+        setReports(prev => prev.map(r =>
+          r._id === selected._id
+            ? { ...r, status: decision === 'approve' ? 'resolved' : 'rejected', adminComment }
+            : r
+        ));
+      }
+      showAlert(`Report ${decision === 'approve' ? 'approved ✅' : 'rejected ❌'} successfully`);
       setSelected(null);
       setAdminComment('');
       fetchReports();
@@ -52,7 +60,7 @@ export default function AdminDashboard() {
       setActionLoading(false);
     }
   };
-
+  
   const filtered = filter === 'all' ? reports : reports.filter(r => r.status === filter);
 
   const counts = {
