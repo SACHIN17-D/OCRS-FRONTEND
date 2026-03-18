@@ -30,16 +30,15 @@ export default function StudentDashboard() {
       setLoading(false);
     }
   };
-
   const fetchStudentInfo = async () => {
     try {
       const res = await getMe();
-      setStudentInfo(res.data);
+      setStudentInfo(res.data); // directly the user object now
     } catch (err) {
       console.error(err);
     }
   };
-
+  
   useEffect(() => {
     fetchStudentInfo();
     fetchReports();
