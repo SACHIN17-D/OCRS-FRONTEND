@@ -23,6 +23,7 @@ export const createReport = (data) => api.post('/reports', data);
 export const getAllReports = () => api.get('/reports');
 export const getMyReports = () => api.get('/reports/mine');
 export const submitAppeal = (reportId, data) => api.post(`/reports/appeal/${reportId}`, data);
+export const getReporterReports = () => api.get('/reports/mine/reporter');
 
 // Evidence
 export const uploadEvidence = (reportId, formData) =>
@@ -33,6 +34,11 @@ export const uploadEvidence = (reportId, formData) =>
 // Admin
 export const verifyReport = (reportId, data) => api.put(`/admin/verify/${reportId}`, data);
 export const getWarnings = () => api.get('/admin/warnings');
+export const getAllUsers = () => api.get('/admin/all-users');
+export const addUser = (data) => api.post('/admin/add-user', data);
+export const editUser = (userId, data) => api.put(`/admin/edit-user/${userId}`, data);
+export const toggleUserStatus = (userId) => api.put(`/admin/toggle-user/${userId}`);
+export const resetWarning = (userId) => api.put(`/admin/reset-warning/${userId}`);
 
 // HOD
 export const getHodReports = () => api.get('/hod/reports');
