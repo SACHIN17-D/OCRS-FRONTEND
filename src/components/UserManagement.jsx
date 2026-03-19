@@ -8,7 +8,7 @@ const DEPARTMENTS = [
   'ISE', 'IT', 'MECH', 'MTRS', 'Administration',
 ];
 
-const ROLES = ['student', 'reporter', 'hod', 'principal'];
+const ROLES = ['HOD'];
 
 export default function UserManagement() {
   const [users, setUsers] = useState([]);
@@ -17,7 +17,7 @@ export default function UserManagement() {
   const [alert, setAlert] = useState(null);
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(null);
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'reporter', department: 'CSE' });
+  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'HOD', department: 'CSE' });
   const [editForm, setEditForm] = useState({});
   const [actionLoading, setActionLoading] = useState(false);
 
