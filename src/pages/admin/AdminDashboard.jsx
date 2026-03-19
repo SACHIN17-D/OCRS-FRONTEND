@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import StatusTracker from '../../components/StatusTracker';
 import UserManagement from '../../components/UserManagement';
-import { getAllReports, verifyReport } from '../../services/api';
 import {
   PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis,
   Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid,
 } from 'recharts';
-
+import { getAllReports, verifyReport, getWarnings } from '../../services/api';
 const COLORS = {
   category: ['#00d2ff', '#0066ff', '#a78bfa', '#22c55e', '#f59e0b', '#ef4444', '#f97316'],
   status: ['#f59e0b', '#3b82f6', '#a78bfa', '#22c55e', '#ef4444'],
@@ -92,20 +91,27 @@ export default function AdminDashboard() {
     return Object.entries(months).map(([month, count]) => ({ month, count }));
   })();
 
-  const warningData = (() => {
-    const studentWarnings = {};
-    reports.filter(r => r.status === 'resolved').forEach(r => {
-      if (!studentWarnings[r.studentRollNo]) {
-        studentWarnings[r.studentRollNo] = { rollNo: r.studentRollNo, name: r.studentName, warnings: 0 };
-      }
-      studentWarnings[r.studentRollNo].warnings += 1;
-    });
-    return Object.values(studentWarnings).map(s => ({
-      ...s,
-      level: s.warnings === 0 ? 'clean' : s.warnings === 1 ? 'watch' : s.warnings === 2 ? 'risk' : s.warnings === 3 ? 'hod' : 'principal',
-    }));
-  })();
+  const [warningData, setWarningData] = useState([]);
 
+useEffect(() => {
+  const fetchWarnings = async () => {
+    try {
+      const res = await getWarnings();
+      setWarningData(res.data.map(s => ({
+        rollNo: s.rollNo,
+        name: s.name,
+        warnings: s.warningCount,
+        level: s.warningLevel === 'watch' ? 'watch' :
+               s.warningLevel === 'risk' ? 'risk' :
+               s.warningLevel === 'hod_review' ? 'hod' :
+               s.warningLevel === 'principal_review' ? 'principal' : 'clean',
+      })));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  fetchWarnings();
+}, []);
   const filteredWarnings = warningFilter === 'all' ? warningData : warningData.filter(s => s.level === warningFilter);
 
   const warningLevelConfig = {
