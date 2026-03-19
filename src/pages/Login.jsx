@@ -184,37 +184,37 @@ export default function Login() {
             </div>
           </div>
 
-         {/* Divider */}
-<div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-  <div style={{ flex: 1, height: 1, background: 'rgba(0, 210, 255, 0.1)' }} />
-  <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-    Staff Login
-  </span>
-  <div style={{ flex: 1, height: 1, background: 'rgba(0, 210, 255, 0.1)' }} />
-</div>
+          {/* Divider */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <div style={{ flex: 1, height: 1, background: 'rgba(0, 210, 255, 0.1)' }} />
+            <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              Staff Login
+            </span>
+            <div style={{ flex: 1, height: 1, background: 'rgba(0, 210, 255, 0.1)' }} />
+          </div>
 
-{error && <div className="alert alert-error">{error}</div>}
+          {error && <div className="alert alert-error">{error}</div>}
 
-<form onSubmit={handleSubmit}>
-  <div className="form-group">
-    <label className="form-label">Email Address</label>
-    <input className="form-input" type="email" placeholder="staff@bitsathy.ac.in"
-      value={email} onChange={e => setEmail(e.target.value)} required />
-  </div>
-  <div className="form-group">
-    <label className="form-label">Password</label>
-    <input className="form-input" type="password" placeholder="Enter your password"
-      value={password} onChange={e => setPassword(e.target.value)} required />
-  </div>
-  <button type="submit" className="btn btn-primary btn-full"
-    disabled={loading} style={{ marginTop: 8 }}>
-    {loading ? 'Signing in...' : '🔐 Sign In'}
-  </button>
-</form>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label className="form-label">Email Address</label>
+              <input className="form-input" type="email" placeholder="admin@college.edu"
+                value={email} onChange={e => setEmail(e.target.value)} required />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Password</label>
+              <input className="form-input" type="password" placeholder="Enter your password"
+                value={password} onChange={e => setPassword(e.target.value)} required />
+            </div>
+            <button type="submit" className="btn btn-primary btn-full"
+              disabled={loading} style={{ marginTop: 8 }}>
+              {loading ? 'Signing in...' : '🔐 Sign In'}
+            </button>
+          </form>
 
-<p style={{ textAlign: 'center', fontSize: 11, color: 'var(--muted)', marginTop: 16 }}>
-  For Admin, HOD, Principal & Reporter access
-</p>
+          <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--muted)', marginTop: 16 }}>
+            For Admin, HOD & Principal access
+          </p>
         </div>
       </div>
     </div>
