@@ -487,18 +487,31 @@ export default function AdminDashboard() {
               boxShadow: '0 24px 80px rgba(0,0,0,0.7)',
               border: '1px solid var(--border)',
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
-                <div>
-                  <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 20, fontWeight: 700 }}>
-                    {selected.reportId}
-                  </h2>
-                  <p style={{ color: 'var(--muted)', fontSize: 13 }}>Report Details</p>
-                </div>
-                <button onClick={() => setSelected(null)} style={{
-                  background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: 'var(--muted)',
-                }}>✕</button>
-              </div>
-
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
+  <div>
+    <h2 style={{ fontFamily: 'DM Serif Display, serif', fontSize: 20, fontWeight: 700 }}>
+      {selected.reportId}
+    </h2>
+    <p style={{ color: 'var(--muted)', fontSize: 13 }}>Report Details</p>
+  </div>
+  <div style={{ display: 'flex', gap: 8 }}>
+    <button onClick={async () => {
+      await fetchReports();
+      const updated = reports.find(r => r._id === selected._id);
+      if (updated) setSelected(updated);
+    }} style={{
+      background: 'rgba(0,210,255,0.1)', border: '1px solid rgba(0,210,255,0.2)',
+      color: '#00d2ff', padding: '6px 12px', borderRadius: 8,
+      fontSize: 12, fontWeight: 600, cursor: 'pointer',
+      fontFamily: 'DM Sans, sans-serif',
+    }}>
+      🔄 Refresh
+    </button>
+    <button onClick={() => setSelected(null)} style={{
+      background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: 'var(--muted)',
+    }}>✕</button>
+  </div>
+</div>
               <div style={{ marginBottom: 24 }}>
                 <StatusTracker status={selected.status} />
               </div>
