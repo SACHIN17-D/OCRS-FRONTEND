@@ -62,12 +62,12 @@ export default function Login() {
         pointerEvents: 'none',
       }} />
 
-      {/* Left panel */}
-      <div style={{
-        flex: 1, display: 'flex', flexDirection: 'column',
-        justifyContent: 'center', padding: '60px 80px',
-        position: 'relative', zIndex: 1,
-      }}>
+      {/* Left panel - hidden on mobile */}
+<div style={{
+  flex: 1, display: 'flex', flexDirection: 'column',
+  justifyContent: 'center', padding: '60px 80px',
+  position: 'relative', zIndex: 1,
+}} className="hide-mobile">
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 64 }}>
           <div style={{
@@ -120,11 +120,12 @@ export default function Login() {
       </div>
 
       {/* Right panel */}
-      <div style={{
-        width: 480, display: 'flex', alignItems: 'center',
-        justifyContent: 'center', padding: 40,
-        position: 'relative', zIndex: 1,
-      }}>
+<div style={{
+  width: 480, display: 'flex', alignItems: 'center',
+  justifyContent: 'center', padding: 40,
+  position: 'relative', zIndex: 1,
+  flex: 1,
+}}>
         <div style={{
           width: '100%', maxWidth: 400,
           background: 'rgba(12, 31, 56, 0.85)',

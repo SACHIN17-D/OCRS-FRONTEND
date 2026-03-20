@@ -8,7 +8,7 @@ const DEPARTMENTS = [
   'ISE', 'IT', 'MECH', 'MTRS', 'Administration',
 ];
 
-const ROLES = ['reporter', 'hod'];
+const ROLES = ['hod'];
 export default function UserManagement() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
