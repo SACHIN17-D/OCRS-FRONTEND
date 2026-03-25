@@ -233,6 +233,29 @@ export default function StudentDashboard() {
                   <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>{report.details}</p>
                 </div>
 
+                {report.reporterEvidence && (
+                  <div style={{ marginTop: 12 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 6 }}>
+                      📷 Evidence Submitted by Reporter
+                    </div>
+                    <a href={report.reporterEvidence} target="_blank" rel="noreferrer">
+                      <img src={report.reporterEvidence} alt="Reporter Evidence" style={{
+                        width: '100%', maxHeight: 260, objectFit: 'contain',
+                        borderRadius: 8, border: '1px solid rgba(0,210,255,0.2)',
+                        background: 'var(--bg2)', cursor: 'pointer', display: 'block',
+                      }} />
+                    </a>
+                    <div style={{ fontSize: 11, color: 'var(--muted)', textAlign: 'center', marginTop: 4 }}>
+                      Click to view full size 🔍
+                    </div>
+                    {report.reporterEvidenceNote && (
+                      <p style={{ fontSize: 12, color: 'var(--text2)', padding: '8px 12px', background: 'rgba(0,210,255,0.05)', borderRadius: 8, marginTop: 8, border: '1px solid rgba(0,210,255,0.1)' }}>
+                        {report.reporterEvidenceNote}
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 {report.adminComment && (
                   <div style={{ marginTop: 10, padding: '10px 14px', background: report.status === 'resolved' ? 'var(--green-light)' : 'var(--red-light)', borderRadius: 8 }}>
                     <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 4 }}>Admin Comment</div>

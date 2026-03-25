@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
-import { createReport,getReporterReports } from '../../services/api';
+import { createReport, getReporterReports, lookupStudent as lookupStudentApi, uploadEvidence } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
-import api from '../../services/api';
 
 const CATEGORIES = ['Attendance', 'Behavior', 'Dress Code', 'Cheating', 'Property Damage', 'Harassment', 'Other'];
 const SEVERITIES = [
   { key: 'low', label: '🟡 Low', desc: 'Minor violation' },
-  { key: 'medium', label: '🟠 Medium', desc: 'Repeated or moderate' },
+  { key: 'medium', label: '🟠 Medium', desc: 'Reported or moderate' },
   { key: 'high', label: '🔴 High', desc: 'Serious misconduct' },
 ];
 
@@ -30,6 +29,9 @@ export default function ReporterDashboard() {
   const [studentInfo, setStudentInfo] = useState(null);
   const [studentLoading, setStudentLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('file');
+  const [proofImage, setProofImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [explanation, setExplanation] = useState('');
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
@@ -50,9 +52,8 @@ export default function ReporterDashboard() {
     if (!rollNo || rollNo.length < 5) { setStudentInfo(null); return; }
     setStudentLoading(true);
     try {
-      const res = await api.get(`/admin/users`);
-      const student = res.data.find(u => u.rollNo === rollNo.toUpperCase() && u.role === 'student');
-      setStudentInfo(student || null);
+      const res = await lookupStudentApi(rollNo);
+      setStudentInfo(res.data);
     } catch (err) {
       setStudentInfo(null);
     } finally {
@@ -65,14 +66,35 @@ export default function ReporterDashboard() {
     setTimeout(() => setAlert(null), 4000);
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProofImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const res = await createReport(form);
+      const reportId = res.data._id;
+
+      // Upload proof image if provided
+      if (proofImage) {
+        const formData = new FormData();
+        formData.append('image', proofImage);
+        formData.append('explanation', explanation || 'Proof submitted by reporter');
+        await uploadEvidence(reportId, formData);
+      }
+
       setSubmitted(res.data);
       setForm({ studentRollNo: '', category: '', severity: 'low', date: '', details: '' });
       setStudentInfo(null);
+      setProofImage(null);
+      setPreview(null);
+      setExplanation('');
       showAlert(`Report ${res.data.reportId} filed successfully!`);
       fetchMyReports();
     } catch (err) {
@@ -147,7 +169,7 @@ export default function ReporterDashboard() {
                   <div>
                     <div style={{ fontWeight: 600, color: 'var(--green)' }}>Report Filed Successfully</div>
                     <div style={{ fontSize: 13, color: 'var(--text2)', marginTop: 2 }}>
-                      Report ID: <strong>{submitted.reportId}</strong> — Student has been notified.
+                      Report ID: <strong>{submitted.reportId}</strong>
                     </div>
                   </div>
                   <button onClick={() => setSubmitted(null)} style={{
@@ -170,7 +192,6 @@ export default function ReporterDashboard() {
                       lookupStudent(e.target.value);
                     }} required />
 
-                  {/* Student info card */}
                   {studentLoading && (
                     <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 6 }}>Looking up student...</div>
                   )}
@@ -234,6 +255,12 @@ export default function ReporterDashboard() {
                       </button>
                     ))}
                   </div>
+                  {/* Severity info */}
+                  <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 6 }}>
+                    {form.severity === 'low' && '🟡 Low — Admin will handle directly'}
+                    {form.severity === 'medium' && '🟠 Medium — Will be escalated to HOD'}
+                    {form.severity === 'high' && '🔴 High — Will be escalated to Principal'}
+                  </div>
                 </div>
 
                 <div className="form-group" style={{ gridColumn: '1 / -1' }}>
@@ -243,13 +270,60 @@ export default function ReporterDashboard() {
                     value={form.details} onChange={e => set('details', e.target.value)}
                     style={{ minHeight: 120 }} required />
                 </div>
+
+                {/* Proof Image Upload */}
+                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                  <label className="form-label">Proof Image (optional)</label>
+                  <label style={{
+                    display: 'block', border: '2px dashed var(--border)',
+                    borderRadius: 10, padding: 20, textAlign: 'center', cursor: 'pointer',
+                    background: preview ? 'transparent' : 'var(--bg2)',
+                    transition: 'all 0.15s',
+                  }}>
+                    {preview ? (
+                      <img src={preview} alt="Preview" style={{
+                        maxWidth: '100%', maxHeight: 200,
+                        borderRadius: 8, objectFit: 'cover',
+                      }} />
+                    ) : (
+                      <div>
+                        <div style={{ fontSize: 32, marginBottom: 8 }}>📷</div>
+                        <div style={{ fontSize: 13, color: 'var(--muted)' }}>Click to upload proof image</div>
+                        <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>JPG, PNG up to 10MB</div>
+                      </div>
+                    )}
+                    <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
+                  </label>
+                  {preview && (
+                    <button type="button" onClick={() => { setProofImage(null); setPreview(null); }}
+                      style={{ fontSize: 12, color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', marginTop: 6 }}>
+                      Remove image
+                    </button>
+                  )}
+                </div>
+
+                {proofImage && (
+                  <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                    <label className="form-label">Proof Explanation</label>
+                    <textarea className="form-input"
+                      placeholder="Explain the proof you are submitting..."
+                      value={explanation} onChange={e => setExplanation(e.target.value)}
+                      style={{ minHeight: 80 }} />
+                  </div>
+                )}
               </div>
 
               <hr className="divider" />
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
                 <button type="button" className="btn btn-outline"
-                  onClick={() => { setForm({ studentRollNo: '', category: '', severity: 'low', date: '', details: '' }); setStudentInfo(null); }}>
+                  onClick={() => {
+                    setForm({ studentRollNo: '', category: '', severity: 'low', date: '', details: '' });
+                    setStudentInfo(null);
+                    setProofImage(null);
+                    setPreview(null);
+                    setExplanation('');
+                  }}>
                   Clear
                 </button>
                 <button type="submit" className="btn btn-primary" disabled={loading}>
@@ -306,9 +380,20 @@ export default function ReporterDashboard() {
                           {new Date(report.createdAt).toLocaleDateString()}
                         </td>
                         <td style={{ padding: '14px 16px' }}>
-                          <span className={`badge badge-${report.status}`}>
-                            {report.status.replace(/_/g, ' ')}
-                          </span>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                            <span className={`badge badge-${report.status}`}>
+                              {report.status.replace(/_/g, ' ')}
+                            </span>
+                            {report.escalatedTo && report.escalatedTo !== 'none' && (
+                              <span style={{
+                                fontSize: 10, padding: '1px 6px', borderRadius: 999, fontWeight: 700,
+                                background: report.meetingStatus === 'confirmed' ? 'var(--green-light)' : 'rgba(239,68,68,0.1)',
+                                color: report.meetingStatus === 'confirmed' ? 'var(--green)' : '#ef4444',
+                              }}>
+                                {report.meetingStatus === 'confirmed' ? '✅ Meeting Done' : `⏳ ${report.escalatedTo.toUpperCase()} Meeting`}
+                              </span>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}

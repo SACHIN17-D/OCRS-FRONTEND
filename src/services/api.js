@@ -10,6 +10,10 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('cg_token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
+  // If sending FormData, let the browser set Content-Type (with boundary)
+  if (config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
+  }
   return config;
 });
 
@@ -24,6 +28,7 @@ export const getAllReports = () => api.get('/reports');
 export const getMyReports = () => api.get('/reports/mine');
 export const submitAppeal = (reportId, data) => api.post(`/reports/appeal/${reportId}`, data);
 export const getReporterReports = () => api.get('/reports/mine/reporter');
+export const lookupStudent = (rollNo) => api.get(`/reports/student/${rollNo}`);
 
 // Evidence
 export const uploadEvidence = (reportId, formData) =>
