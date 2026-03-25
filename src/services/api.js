@@ -32,9 +32,7 @@ export const lookupStudent = (rollNo) => api.get(`/reports/student/${rollNo}`);
 
 // Evidence
 export const uploadEvidence = (reportId, formData) =>
-  api.post(`/evidence/${reportId}`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  api.post(`/evidence/${reportId}`, formData);
 
 // Admin
 export const verifyReport = (reportId, data) => api.put(`/admin/verify/${reportId}`, data);
