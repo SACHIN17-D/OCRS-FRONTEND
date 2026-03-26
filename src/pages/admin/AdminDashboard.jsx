@@ -512,27 +512,53 @@ useEffect(() => {
               </div>
 
               {selected.evidence && (
-                <div style={{ marginBottom: 20 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 8 }}>Student Proof</div>
-                  {selected.evidence.imageUrl && (
-                    <a href={selected.evidence.imageUrl} target="_blank" rel="noreferrer">
-                      <img src={selected.evidence.imageUrl} alt="Proof" style={{
-                        width: '100%', maxHeight: 400, objectFit: 'contain',
-                        borderRadius: 8, border: '1px solid var(--border)', marginBottom: 10,
-                        background: 'var(--bg2)', cursor: 'pointer',
-                      }} />
-                    </a>
-                  )}
-                  <div style={{ fontSize: 11, color: 'var(--muted)', textAlign: 'center', marginTop: 4 }}>
-                    Click image to view full size 🔍
-                  </div>
-                  {selected.evidence.explanation && (
-                    <p style={{ fontSize: 13, color: 'var(--text2)', padding: '10px 14px', background: 'var(--bg2)', borderRadius: 8 }}>
-                      {selected.evidence.explanation}
-                    </p>
-                  )}
-                </div>
-              )}
+  <div style={{ marginBottom: 20 }}>
+    {/* Reporter's Proof */}
+    {selected.evidence.reporterImageUrl && (
+      <div style={{ marginBottom: 16 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#60a5fa', marginBottom: 8 }}>
+          👨‍🏫 Reporter's Proof
+        </div>
+        <a href={selected.evidence.reporterImageUrl} target="_blank" rel="noreferrer">
+          <img src={selected.evidence.reporterImageUrl} alt="Reporter Proof" style={{
+            width: '100%', maxHeight: 300, objectFit: 'contain',
+            borderRadius: 8, border: '1px solid rgba(59,130,246,0.3)', marginBottom: 8,
+            background: 'var(--bg2)', cursor: 'pointer',
+          }} />
+        </a>
+        {selected.evidence.reporterExplanation && (
+          <p style={{ fontSize: 13, color: 'var(--text2)', padding: '10px 14px', background: 'rgba(59,130,246,0.05)', borderRadius: 8, border: '1px solid rgba(59,130,246,0.2)' }}>
+            {selected.evidence.reporterExplanation}
+          </p>
+        )}
+      </div>
+    )}
+
+    {/* Student's Proof */}
+    {(selected.evidence.studentImageUrl || selected.evidence.imageUrl) && (
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#4ade80', marginBottom: 8 }}>
+          🎓 Student's Proof
+        </div>
+        <a href={selected.evidence.studentImageUrl || selected.evidence.imageUrl} target="_blank" rel="noreferrer">
+          <img src={selected.evidence.studentImageUrl || selected.evidence.imageUrl} alt="Student Proof" style={{
+            width: '100%', maxHeight: 300, objectFit: 'contain',
+            borderRadius: 8, border: '1px solid rgba(34,197,94,0.3)', marginBottom: 8,
+            background: 'var(--bg2)', cursor: 'pointer',
+          }} />
+        </a>
+        <div style={{ fontSize: 11, color: 'var(--muted)', textAlign: 'center', marginBottom: 8 }}>
+          Click image to view full size 🔍
+        </div>
+        {(selected.evidence.studentExplanation || selected.evidence.explanation) && (
+          <p style={{ fontSize: 13, color: 'var(--text2)', padding: '10px 14px', background: 'rgba(34,197,94,0.05)', borderRadius: 8, border: '1px solid rgba(34,197,94,0.2)' }}>
+            {selected.evidence.studentExplanation || selected.evidence.explanation}
+          </p>
+        )}
+      </div>
+    )}
+  </div>
+)}
 
               {selected.appealMessage && (
                 <div style={{ marginBottom: 20 }}>
