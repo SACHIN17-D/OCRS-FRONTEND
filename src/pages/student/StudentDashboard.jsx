@@ -19,6 +19,7 @@ export default function StudentDashboard() {
   const [appealAction, setAppealAction] = useState('appeal');
   const [appealLoading, setAppealLoading] = useState(false);
   const [studentInfo, setStudentInfo] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   const fetchReports = async () => {
     try {
@@ -240,8 +241,11 @@ export default function StudentDashboard() {
                     <img
                       src={report.evidence.reporterImageUrl}
                       alt="Reporter proof"
-                      style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }}
+                      onClick={() => setLightboxImage(report.evidence.reporterImageUrl)}
+                      style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 8, marginBottom: 8, cursor: 'zoom-in' }}
+                      title="Click to view full image"
                     />
+                    <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 2 }}>🔍 Click image to view full size</div>
                     {report.evidence.reporterExplanation && (
                       <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6, marginTop: 6 }}>
                         {report.evidence.reporterExplanation}
@@ -422,6 +426,35 @@ export default function StudentDashboard() {
           </div>
         )}
       </div>
+
+      {/* Lightbox */}
+      {lightboxImage && (
+        <div
+          onClick={() => setLightboxImage(null)}
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.92)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 1000, padding: 24, cursor: 'zoom-out',
+          }}
+        >
+          <button
+            onClick={() => setLightboxImage(null)}
+            style={{
+              position: 'absolute', top: 20, right: 24,
+              background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '50%', width: 40, height: 40,
+              fontSize: 20, color: '#fff', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >✕</button>
+          <img
+            src={lightboxImage}
+            alt="Reporter proof full"
+            style={{ maxWidth: '90vw', maxHeight: '90vh', borderRadius: 10, objectFit: 'contain', boxShadow: '0 0 60px rgba(0,0,0,0.8)' }}
+            onClick={e => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }
