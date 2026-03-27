@@ -86,6 +86,7 @@ export default function ReporterDashboard() {
         const formData = new FormData();
         formData.append('image', proofImage);
         formData.append('explanation', explanation || 'Proof submitted by reporter');
+        formData.append('submittedAs', 'reporter');
         await uploadEvidence(reportId, formData);
       }
 

@@ -66,6 +66,7 @@ export default function StudentDashboard() {
       const formData = new FormData();
       formData.append('image', proofImage);
       formData.append('explanation', explanation);
+      formData.append('submittedAs', 'student');
       await uploadEvidence(selected._id, formData);
       showAlert('Proof submitted successfully! Admin will review shortly.');
       setSelected(null);
