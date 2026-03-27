@@ -234,6 +234,22 @@ export default function StudentDashboard() {
                   <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6 }}>{report.details}</p>
                 </div>
 
+                {report.evidence?.reporterImageUrl && (
+                  <div style={{ marginTop: 10, padding: '12px 14px', background: 'var(--bg2)', borderRadius: 8, border: '1px solid rgba(0,210,255,0.15)' }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#00d2ff', marginBottom: 8 }}>📎 Reporter's Proof</div>
+                    <img
+                      src={report.evidence.reporterImageUrl}
+                      alt="Reporter proof"
+                      style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }}
+                    />
+                    {report.evidence.reporterExplanation && (
+                      <p style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.6, marginTop: 6 }}>
+                        {report.evidence.reporterExplanation}
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 {report.adminComment && (
                   <div style={{ marginTop: 10, padding: '10px 14px', background: report.status === 'resolved' ? 'var(--green-light)' : 'var(--red-light)', borderRadius: 8 }}>
                     <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--muted)', marginBottom: 4 }}>Admin Comment</div>
