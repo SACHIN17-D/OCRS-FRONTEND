@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar';
 import { createReport, getReporterReports, lookupStudent as lookupStudentApi, uploadEvidence } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 
-const CATEGORIES = ['Attendance', 'Behavior', 'Dress Code', 'Cheating', 'Property Damage', 'Harassment', 'Other'];
+const CATEGORIES = ['Attendance', 'Behavior', 'Dress Code', 'Cheating', 'Property Damage', 'Ragging', 'Other'];
 const SEVERITIES = [
   { key: 'low', label: '🟡 Low', desc: 'Minor violation' },
   { key: 'medium', label: '🟠 Medium', desc: 'Reported or moderate' },
